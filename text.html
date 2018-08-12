@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <p>要使用的图像：</p>
+    <img id="tulip" src="./src/baby.png" alt="The Tulip" />
+
+    <p>画布：</p>
+    <canvas id="myCanvas" width="500" height="300" style="border:1px solid #d3d3d3;background:#ffffff;">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+
+    <script>
+        /*
+        drawImage 会自动清除上一帧画面
+        */
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var img = document.getElementById("tulip");
+        var i = 10;
+
+        setInterval(function () {
+            ++i;
+            setTimeout(function () {
+                ctx.drawImage(img, i, 10);
+            }, 1000)
+        }, 100)
+
+
+
+    </script>
+
+</body>
+
+</html>
