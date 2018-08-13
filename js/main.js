@@ -17,6 +17,7 @@ var mom; // 大鱼
 var mx;
 var my; // 鼠标点的位置
 
+var baby;
 
 document.body.onload = game; // game 函数作为主入口
 function game() {
@@ -56,6 +57,10 @@ function init() {
     // 鼠标的的初始化
     mx = canWidth * 0.5;
     my = canHeight * 0.5;
+    
+    // 初始化小鱼
+    baby = new babyObj();
+    baby.init();
 
 
 }
@@ -76,6 +81,8 @@ function gameloop() {
     ctx1.clearRect(0, 0, canWidth, canHeight); // 清除
     mom.draw();//绘制大鱼
     momFruitCollision(); // 碰撞检测
+
+    baby.draw();// 绘制小鱼
 }
 
 
