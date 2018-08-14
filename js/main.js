@@ -20,6 +20,7 @@ var my; // 鼠标点的位置
 var baby; // 小鱼
 var babyTail = []; // 小鱼尾巴数组
 var babyEye = []; // 小鱼翻眼睛
+var babyBody = []; // 小鱼身体
 
 document.body.onload = game; // game 函数作为主入口
 function game() {
@@ -65,6 +66,13 @@ function init() {
         babyEye[i] = new Image();
         babyEye[i].src = "./src/babyEye" + i + ".png";
     }
+    // 小鱼身体变白实现
+    for (var i = 0; i < 20; i++) {
+        babyBody[i] = new Image();
+        babyBody[i].src ="./src/babyFade" + i +".png";
+
+    }
+
     // 鼠标的的初始化
     mx = canWidth * 0.5;
     my = canHeight * 0.5;
