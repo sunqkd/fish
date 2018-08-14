@@ -17,7 +17,9 @@ var mom; // 大鱼
 var mx;
 var my; // 鼠标点的位置
 
-var baby;
+var baby; // 小鱼
+var babyTail = []; // 小鱼尾巴数组
+
 
 document.body.onload = game; // game 函数作为主入口
 function game() {
