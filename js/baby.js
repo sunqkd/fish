@@ -2,19 +2,25 @@
 var babyObj = function () {
     this.x;
     this.y;
-    this.babyEye = new Image();
+    // this.babyEye = new Image();
     this.babyBody = new Image();
-    this.babyTail = new Image();
+    // this.babyTail = new Image();
     this.angle; // 角度
+    this.babyTailTimer = 0; // 计时器
+    this.babyTailCount = 0; // 执行到那一帧了
+
+    this.babyEyeTimer = 0; // 计时器
+    this.babyEyeCount = 0; // 执行到那一帧
+    this.babyEyeInterval = 1000; // 时间间隔
 }
 // 初始化位置
 babyObj.prototype.init = function () {
     this.x = canWidth * 0.5 - 50; // 初始化小鱼的位置
     this.y = canHeight * 0.5 + 50;
     this.angle = 0; // 旋转角度
-    this.babyEye.src = "./src/babyEye0.png"
+    // this.babyEye.src = "./src/babyEye0.png"
     this.babyBody.src = "./src/babyFade0.png";
-    this.babyTail.src = "./src/babyTail0.png";
+    // this.babyTail.src = "./src/babyTail0.png";
 
 }
 // 画小鱼
@@ -23,19 +29,44 @@ babyObj.prototype.draw = function () {
     // leap x,y
     this.x = lerpDistance(mom.x, this.x, 0.96); // 返回值趋向目标值
     this.y = lerpDistance(mom.y, this.y, 0.96); // 返回值趋向目标值
-    // leap angle
 
+    // leap angle
     var deltaY = mom.y - this.y;
     var deltaX = mom.x - this.x;
     var beta = Math.atan2(deltaY, deltaX) + Math.PI; // 角度
     this.angle = lerpAngle(beta, this.angle, 0.9);
 
+    // baby tail count 尾巴摇动
+    this.babyTailTimer += deltaTime;
+    if (this.babyTailTimer > 50) {
+        this.babyTailCount = (this.babyTailCount + 1) % 8; // 取余数
+        this.babyTailTimer = this.babyTailTimer % 50; // 取余数
+    }
+
+    // baby eye count 眼睛眨眨
+    /** */
+    this.babyEyeTimer += deltaTime;
+    if (this.babyEyeTimer > this.babyEyeInterval) {
+        this.babyEyeCount = (this.babyEyeCount + 1) % 2;
+        this.babyEyeTimer %= this.babyEyeInterval;
+        if (this.babyEyeCount == 0) { // 闭眼
+            this.babyEyeInterval = Math.random() * 1500 + 2000; // [2000,3500)
+        } else { // 眼睛睁开
+            this.babyEyeInterval = 200;
+        }
+    }
+
+
     ctx1.save();
 
     ctx1.translate(this.x, this.y);
     ctx1.rotate(this.angle);
-    ctx1.drawImage(this.babyTail, -this.babyTail.width * 0.5 + 23, -this.babyTail.height * 0.5);
+
+    var babyTailCount = this.babyTailCount; // 临时变量
+
+    ctx1.drawImage(babyTail[babyTailCount], -babyTail[babyTailCount].width * 0.5 + 23, -babyTail[babyTailCount].height * 0.5);
     ctx1.drawImage(this.babyBody, -this.babyBody.width * 0.5, -this.babyBody.height * 0.5);
-    ctx1.drawImage(this.babyEye, -this.babyEye.width * 0.5, -this.babyEye.height * 0.5);
+    var babyEyeCount = this.babyEyeCount; // 临时变量
+    ctx1.drawImage(babyEye[babyEyeCount], -babyEye[babyEyeCount].width * 0.5, -babyEye[babyEyeCount].height * 0.5);
     ctx1.restore();
 }

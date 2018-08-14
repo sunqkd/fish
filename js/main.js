@@ -19,7 +19,7 @@ var my; // 鼠标点的位置
 
 var baby; // 小鱼
 var babyTail = []; // 小鱼尾巴数组
-
+var babyEye = []; // 小鱼翻眼睛
 
 document.body.onload = game; // game 函数作为主入口
 function game() {
@@ -55,11 +55,20 @@ function init() {
     // 大鱼
     mom = new momObj();
     mom.init(); // 初始化
-
+    // 小鱼尾巴数组
+    for (var i = 0; i < 8; i++) {
+        babyTail[i] = new Image();
+        babyTail[i].src = "./src/bigTail" + i + ".png";
+    }
+    // 小鱼眼睛数组
+    for (var i = 0; i < 2; i++) {
+        babyEye[i] = new Image();
+        babyEye[i].src = "./src/babyEye" + i + ".png";
+    }
     // 鼠标的的初始化
     mx = canWidth * 0.5;
     my = canHeight * 0.5;
-    
+
     // 初始化小鱼
     baby = new babyObj();
     baby.init();
